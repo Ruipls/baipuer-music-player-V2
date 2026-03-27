@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>摆谱儿音乐播放器</title>
+  <meta name="description" content="一个轻巧但有氛围感的多端音乐播放器，支持前台聆听与后台上传管理。">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="music-page">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-grid"></div>
+
+  <main class="site-shell">
+    <section class="showcase-card">
+      <div class="eyebrow">Live QR Listening</div>
+      <h1>这一场的声音，已经就位。</h1>
+      <p class="lead">
+        你现在看到的是现场专属听歌页。直接播放、切歌、调音量，在手机和电脑上都能顺手听完这一组曲目。
+      </p>
+
+      <div class="record-stage" id="recordStage">
+        <div class="record-disc">
+          <div class="record-core"></div>
+        </div>
+        <div class="wave-bars" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="current-track">
+        <div>
+          <p class="caption">现场曲目</p>
+          <h2 id="trackTitle">等待加载曲目</h2>
+          <p id="trackMeta">本场曲目加载完成后，这里会显示标题、歌手和当前氛围。</p>
+        </div>
+        <span class="ghost-link" role="note">扫码即听，无需登录</span>
+      </div>
+    </section>
+
+    <section class="player-panel">
+      <div class="panel-head">
+        <div>
+          <p class="caption">Listening Controls</p>
+          <h3>播放控制</h3>
+        </div>
+        <div class="repeat-badge" id="repeatBadge">循环关闭</div>
+      </div>
+
+      <div class="timeline-group">
+        <label class="range-label" for="progressRange">播放进度</label>
+        <input id="progressRange" class="range-input" type="range" min="0" max="100" value="0">
+        <div class="time-row">
+          <span id="currentTime">00:00</span>
+          <span id="totalTime">00:00</span>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <button class="control-button" id="shuffleButton" type="button">随机</button>
+        <button class="control-button" id="prevButton" type="button">上一首</button>
+        <button class="play-button" id="playButton" type="button">播放</button>
+        <button class="control-button" id="nextButton" type="button">下一首</button>
+        <button class="control-button" id="repeatButton" type="button">循环</button>
+      </div>
+
+      <div class="utility-grid">
+        <label class="utility-card">
+          <span>音量</span>
+          <div class="utility-inline">
+            <button class="mini-button" id="muteButton" type="button">静音</button>
+            <input id="volumeRange" class="range-input compact" type="range" min="0" max="100" value="85">
+          </div>
+        </label>
+
+        <label class="utility-card" for="speedSelect">
+          <span>倍速</span>
+          <select id="speedSelect" class="select-input">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="playlist-card">
+        <div class="panel-head compact">
+          <div>
+            <p class="caption">Playlist</p>
+            <h3>歌单</h3>
+          </div>
+          <span class="song-count" id="songCount">0 首</span>
+        </div>
+
+        <div class="playlist" id="playlist"></div>
+        <div class="empty-state" id="emptyState">
+          本场歌单还在准备中，请稍后刷新页面或向现场工作人员确认播放安排。
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="audioPlayer" preload="metadata"></audio>
+  <script src="/app.js" defer></script>
+</body>
+</html>
