@@ -29,6 +29,14 @@ function sanitizeNameSegment(value) {
     .toLowerCase();
 }
 
+function isBlobConfigured() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+function createBlobConfigError() {
+  return new Error('Vercel Blob is not configured for this project yet.');
+}
+
 export function getExtension(fileName) {
   const normalized = String(fileName || '').toLowerCase();
   const dotIndex = normalized.lastIndexOf('.');
@@ -59,6 +67,10 @@ export function sortSongs(songs) {
 }
 
 export async function readLibrary() {
+  if (!isBlobConfigured()) {
+    return [];
+  }
+
   const { blobs } = await list({ prefix: MANIFEST_PATH, limit: 10 });
   const manifest = blobs.find((blob) => blob.pathname === MANIFEST_PATH);
 
@@ -79,6 +91,10 @@ export async function readLibrary() {
 }
 
 export async function writeLibrary(songs) {
+  if (!isBlobConfigured()) {
+    throw createBlobConfigError();
+  }
+
   await put(MANIFEST_PATH, JSON.stringify(sortSongs(songs), null, 2), {
     access: 'public',
     addRandomSuffix: false,
@@ -91,6 +107,10 @@ export async function writeLibrary(songs) {
 export async function deleteSongBlob(song) {
   if (!song?.blobPath) {
     return;
+  }
+
+  if (!isBlobConfigured()) {
+    throw createBlobConfigError();
   }
 
   await del(song.blobPath);

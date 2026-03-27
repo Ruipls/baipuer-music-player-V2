@@ -2,14 +2,11 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 
 const SESSION_COOKIE = 'bapuer_admin_session';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 14;
+const DEFAULT_ADMIN_PASSWORD = '110';
+const DEFAULT_SESSION_SECRET = 'bapuer-session-secret-fallback-2026';
 
 function getSessionSecret() {
-  const secret = process.env.SESSION_SECRET;
-  if (!secret) {
-    throw new Error('Missing SESSION_SECRET environment variable.');
-  }
-
-  return secret;
+  return process.env.SESSION_SECRET || DEFAULT_SESSION_SECRET;
 }
 
 function base64UrlEncode(value) {
@@ -54,12 +51,8 @@ function safeEquals(left, right) {
 }
 
 export function verifyPassword(password) {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected) {
-    throw new Error('Missing ADMIN_PASSWORD environment variable.');
-  }
-
-  return safeEquals(password, expected);
+  const expected = process.env.ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD;
+  return safeEquals(String(password || ''), expected);
 }
 
 export function createSessionCookie(request) {
