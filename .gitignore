@@ -1,0 +1,8 @@
+dist/
+node_modules/
+storage/
+.tmp/
+*.tmp
+.env.local
+.codex/
+.impeccable.md
