@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>摆谱儿音乐播放器后台</title>
+  <meta name="description" content="上传并管理歌曲的后台页面。">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-page">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-grid"></div>
+
+  <main class="admin-shell">
+    <section class="admin-hero">
+      <div class="eyebrow">Private Backstage</div>
+      <h1>你维护曲库，观众只负责听见。</h1>
+      <p class="lead">
+        这里是仅供后台管理使用的维护页。上传或删除歌曲后，前台现场页面会自动更新。建议始终保留 3 到 5 首，让整体节奏更稳。
+      </p>
+      <div class="admin-links">
+        <a class="ghost-link" href="/">查看前台</a>
+        <span class="slots-pill" id="slotsInfo">剩余 5 个位置</span>
+      </div>
+    </section>
+
+    <section class="auth-card" id="authCard">
+      <div class="panel-head">
+        <div>
+          <p class="caption">Admin Access</p>
+          <h2>登录后台</h2>
+        </div>
+        <span class="song-count">仅限管理</span>
+      </div>
+      <p class="lead auth-lead">
+        输入管理员密码后，你才能上传、替换和删除现场曲目。观众不会看到这里的管理操作。
+      </p>
+      <form class="auth-form" id="loginForm">
+        <label class="form-field">
+          <span>管理员密码</span>
+          <input
+            id="passwordInput"
+            class="text-input"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="输入后台密码"
+            required
+          >
+        </label>
+        <button class="submit-button" id="loginButton" type="submit">进入后台</button>
+        <p class="status-text" id="authStatus">登录后即可管理现场歌单。</p>
+      </form>
+    </section>
+
+    <section class="admin-grid hidden" id="adminWorkspace">
+      <form class="upload-card" id="uploadForm">
+        <div class="panel-head">
+          <div>
+            <p class="caption">Upload Song</p>
+            <h2>上传歌曲</h2>
+          </div>
+          <button class="control-button" id="logoutButton" type="button">退出登录</button>
+        </div>
+
+        <label class="form-field">
+          <span>歌曲标题</span>
+          <input id="titleInput" class="text-input" name="title" type="text" placeholder="例如：月光边界" required>
+        </label>
+
+        <label class="form-field">
+          <span>歌手 / 项目名</span>
+          <input id="artistInput" class="text-input" name="artist" type="text" placeholder="例如：摆谱儿实验室">
+        </label>
+
+        <label class="form-field">
+          <span>专辑 / 场景</span>
+          <input id="albumInput" class="text-input" name="album" type="text" placeholder="例如：夜行样片">
+        </label>
+
+        <label class="form-field">
+          <span>一句说明</span>
+          <textarea id="noteInput" class="text-area" name="note" rows="4" placeholder="可以写一句关于这首歌的氛围描述。"></textarea>
+        </label>
+
+        <label class="upload-dropzone" for="fileInput">
+          <input id="fileInput" name="file" type="file" accept=".mp3,.wav,.ogg,.m4a,.aac,.flac" required>
+          <strong>选择音频文件</strong>
+          <span>支持 MP3 / WAV / OGG / M4A / AAC / FLAC，单首 40MB 以内。</span>
+          <span id="fileNameHint">尚未选择文件</span>
+        </label>
+
+        <button class="submit-button" id="submitButton" type="submit">上传到曲库</button>
+        <p class="status-text" id="statusText">上传完成后，前台会自动可播放。</p>
+      </form>
+
+      <section class="library-card">
+        <div class="panel-head">
+          <div>
+            <p class="caption">Song Library</p>
+            <h2>当前曲库</h2>
+          </div>
+          <span class="song-count" id="libraryCount">0 / 5</span>
+        </div>
+
+        <div class="library-list" id="libraryList"></div>
+        <div class="empty-state" id="libraryEmpty">
+          还没有歌曲。先上传一首试试，前台页面会自动读取并展示。
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/admin.js" type="module"></script>
+</body>
+</html>
