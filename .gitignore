@@ -3,6 +3,7 @@ node_modules/
 storage/
 .tmp/
 *.tmp
+.tmp-head-*.html
 .env.local
 .codex/
 .impeccable.md
